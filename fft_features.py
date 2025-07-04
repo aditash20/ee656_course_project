@@ -24,7 +24,6 @@ def extract_frequency_domain_features(signal, n_bins=8):
     fft_vals = fft(signal)
     
     # 2. Compute the Power Spectral Density (PSD) using only positive frequencies.
-    #    For real signals, all information is in the first half of the spectrum.
     psd = (2.0 / N) * np.abs(fft_vals[0:N//2])**2
     
     # 3. Calculate the total energy in the positive frequency spectrum.
@@ -41,7 +40,6 @@ def extract_frequency_domain_features(signal, n_bins=8):
         start_idx = i * points_per_bin
         end_idx = (i + 1) * points_per_bin
         
-        # Ensure the last bin captures all remaining points.
         if i == n_bins - 1:
             end_idx = len(psd)
             
@@ -51,18 +49,15 @@ def extract_frequency_domain_features(signal, n_bins=8):
         
     return features
 
-# --- Standalone Test Block ---
 if __name__ == '__main__':
     print("--- Running Standalone Test for fft_features.py ---")
     
-    # Generate some sample data
     num_points = 50000
     time = np.linspace(0, 1, num_points)
     sample_signal = (1.0 * np.sin(2 * np.pi * 1000 * time) + 
                      0.5 * np.sin(2 * np.pi * 8000 * time) +
                      0.1 * np.random.randn(num_points))
                      
-    # Extract features using the recommended implementation
     fft_features = extract_frequency_domain_features(sample_signal)
     
     print(f"Successfully extracted {len(fft_features)} features.")

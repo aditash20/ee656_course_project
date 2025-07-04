@@ -15,10 +15,8 @@ def extract_time_domain_features(signal):
         list: A list containing the 8 calculated feature values.
     """
     if signal.size == 0:
-        # Handle empty signal to avoid errors
         return [0.0] * 8
 
-    # Pre-calculate common values to improve efficiency
     abs_signal = np.abs(signal)
     
     # 1. Absolute Statistical Mean
@@ -39,10 +37,10 @@ def extract_time_domain_features(signal):
     # 6. Skewness
     skew = stats.skew(signal)
     
-    # 7. Crest Factor (handle potential division by zero)
+    # 7. Crest Factor
     crest_factor = peak / rms if rms != 0 else 0
     
-    # 8. Shape Factor (handle potential division by zero)
+    # 8. Shape Factor
     shape_factor = rms / abs_mean if abs_mean != 0 else 0
     
     feature_vector = [
@@ -58,28 +56,27 @@ def extract_time_domain_features(signal):
     
     return feature_vector
 
-# --- Standalone Test Block ---
-# This code only runs if you execute this file directly (e.g., "python td_features.py")
-# It's useful for testing this specific module in isolation.
-if __name__ == '__main__':
-    print("--- Running Standalone Test for td_features.py ---")
+# # --- Standalone Test Block ---
+
+# if __name__ == '__main__':
+#     print("--- Running Standalone Test for td_features.py ---")
     
-    # Generate some sample data to test the function
-    sample_signal = np.random.randn(50000) * 2
-    sample_signal[1000] = 10  # Add a distinct peak
+#     # Generate some sample data to test the function
+#     sample_signal = np.random.randn(50000) * 2
+#     sample_signal[1000] = 10  # Add a distinct peak
     
-    # Call the function to extract features
-    td_features = extract_time_domain_features(sample_signal)
+#     # Call the function to extract features
+#     td_features = extract_time_domain_features(sample_signal)
     
-    print(f"Successfully extracted {len(td_features)} features.")
+#     print(f"Successfully extracted {len(td_features)} features.")
     
-    # Define feature names for clear output
-    feature_names = [
-        "Abs Mean", "Max Peak", "RMS", "Variance", 
-        "Kurtosis", "Skewness", "Crest Factor", "Shape Factor"
-    ]
+#     # Define feature names for clear output
+#     feature_names = [
+#         "Abs Mean", "Max Peak", "RMS", "Variance", 
+#         "Kurtosis", "Skewness", "Crest Factor", "Shape Factor"
+#     ]
     
-    # Print the results in a readable format
-    print("\n--- Test Results ---")
-    for name, value in zip(feature_names, td_features):
-        print(f"{name:>15}: {value:.4f}")
+#     # Print the results in a readable format
+#     print("\n--- Test Results ---")
+#     for name, value in zip(feature_names, td_features):
+#         print(f"{name:>15}: {value:.4f}")
