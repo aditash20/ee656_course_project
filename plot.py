@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 
 # Load data
-X = np.load("all_features.npy")         # shape: [n_samples, n_features]
-y = np.load("all_labels.npy")           # shape: [n_samples]
+X = np.load("all_features.npy")
+y = np.load("all_labels.npy")
 
 # Reduce to 2D
 pca = PCA(n_components=2)
